@@ -1,0 +1,59 @@
+<!-- Mini RRIT Example -->
+
+<section class="panel panel-default" id="rrit-mini-example">
+  <header class="panel-heading">
+    <h2 class="panel-title">Mini RRIT Example – Test Report Generator</h2>
+  </header>
+
+  <div class="panel-body">
+    <form id="rritForm">
+      <fieldset>
+        <legend>Category A - Regulatory Compliance</legend>
+        <label><input type="radio" name="catA" value="Yes"> Yes</label>
+        <label><input type="radio" name="catA" value="No"> No</label>
+        <label><input type="radio" name="catA" value="Unknown"> Unknown</label>
+        <label><input type="radio" name="catA" value="Not Applicable"> Not Applicable</label>
+      </fieldset>
+
+      <fieldset>
+        <legend>Category B - Data Security</legend>
+        <label><input type="radio" name="catB" value="Yes"> Yes</label>
+        <label><input type="radio" name="catB" value="No"> No</label>
+        <label><input type="radio" name="catB" value="Unknown"> Unknown</label>
+        <label><input type="radio" name="catB" value="Not Applicable"> Not Applicable</label>
+      </fieldset>
+
+      <button type="button" class="btn btn-primary" onclick="generateReport()">Generate Report</button>
+    </form>
+
+    <div id="reportSection" class="hidden" style="margin-top:2rem;">
+      <h3>RRIT Assessment Report</h3>
+      <div id="reportContent"></div>
+      <button class="btn btn-default" onclick="window.print()">Print / Save as PDF</button>
+    </div>
+  </div>
+</section>
+
+<script>
+function generateReport() {
+  const form = document.getElementById('rritForm');
+  const report = document.getElementById('reportContent');
+  const section = document.getElementById('reportSection');
+  let output = "<ul>";
+
+  const categories = [
+    { id: "catA", label: "A - Regulatory Compliance" },
+    { id: "catB", label: "B - Data Security" }
+  ];
+
+  categories.forEach(cat => {
+    const selected = form.querySelector(`input[name="${cat.id}"]:checked`);
+    const value = selected ? selected.value : "No answer";
+    output += `<li><strong>${cat.label}:</strong> ${value}</li>`;
+  });
+
+  output += "</ul>";
+  report.innerHTML = output;
+  section.classList.remove("hidden");
+}
+</script>
